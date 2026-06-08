@@ -85,7 +85,7 @@ export default function Transfer() {
                 style={{
                   background: c.bg,
                   color: c.color,
-                  outline: selectedContact.name === c.name ? '2.5px solid var(--primary)' : '2.5px solid transparent',
+                  outline: selectedContact.name === c.name ? '3px solid var(--primary)' : '3px solid transparent',
                 }}
               >{c.initials}</div>
               <span>{c.name}</span>
