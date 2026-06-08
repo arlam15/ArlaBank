@@ -8,17 +8,34 @@ const transferTypes = [
   { id: 'phone', icon: 'ti-device-mobile', name: 'Nr. telefoni', desc: 'Me kontaktet' },
 ]
 
-const contacts = [
-  { initials: 'NB', name: 'Nensi', bg: '#EBF1FD', color: 'var(--primary)', iban: 'AL47 2121 1009 0000 0002 3569 8741' },
-  { initials: 'MA', name: 'Marku', bg: 'var(--success-bg)', color: 'var(--success)', iban: 'AL47 2121 1009 0000 0001 2345 6789' },
-  { initials: 'ER', name: 'Erjon', bg: 'var(--warning-bg)', color: 'var(--warning)', iban: 'AL47 2121 1009 0000 0003 9876 5432' },
-  { initials: 'SI', name: 'Sindi', bg: 'var(--purple-bg)', color: 'var(--purple)', iban: 'AL47 2121 1009 0000 0004 1111 2222' },
-]
+const allContacts = {
+  internal: [
+    { initials: 'NB', name: 'Nensi', bg: '#EBF1FD', color: 'var(--primary)', iban: 'AL47 2121 1009 0000 0002 3569 8741' },
+    { initials: 'MA', name: 'Marku', bg: 'var(--success-bg)', color: 'var(--success)', iban: 'AL47 2121 1009 0000 0001 2345 6789' },
+    { initials: 'ER', name: 'Erjon', bg: 'var(--warning-bg)', color: 'var(--warning)', iban: 'AL47 2121 1009 0000 0003 9876 5432' },
+    { initials: 'SI', name: 'Sindi', bg: 'var(--purple-bg)', color: 'var(--purple)', iban: 'AL47 2121 1009 0000 0004 1111 2222' },
+  ],
+  local: [
+    { initials: 'AG', name: 'Agim', bg: '#EBF1FD', color: 'var(--primary)', iban: 'AL47 2121 2009 0000 0002 1111 3333' },
+    { initials: 'BL', name: 'Blerta', bg: 'var(--success-bg)', color: 'var(--success)', iban: 'AL47 2121 3009 0000 0005 4444 5555' },
+    { initials: 'DI', name: 'Diana', bg: 'var(--warning-bg)', color: 'var(--warning)', iban: 'AL47 2121 4009 0000 0006 6666 7777' },
+  ],
+  intl: [
+    { initials: 'LU', name: 'Luca', bg: '#EBF1FD', color: 'var(--primary)', iban: 'IT60 X054 2811 1010 0000 0123 456' },
+    { initials: 'AN', name: 'Anna', bg: 'var(--purple-bg)', color: 'var(--purple)', iban: 'DE89 3704 0044 0532 0130 00' },
+  ],
+  phone: [
+    { initials: 'NB', name: 'Nensi', bg: '#EBF1FD', color: 'var(--primary)', phone: '+355 69 123 4567' },
+    { initials: 'ER', name: 'Erjon', bg: 'var(--warning-bg)', color: 'var(--warning)', phone: '+355 68 987 6543' },
+    { initials: 'SI', name: 'Sindi', bg: 'var(--purple-bg)', color: 'var(--purple)', phone: '+355 67 111 2222' },
+  ],
+}
 
 export default function Transfer() {
   const navigate = useNavigate()
   const [selectedType, setSelectedType] = useState('internal')
-  const [selectedContact, setSelectedContact] = useState(contacts[0])
+  const [selectedContact, setSelectedContact] = useState(allContacts.internal[0])
+  const contacts = allContacts[selectedType] || allContacts.internal
   const [amount, setAmount] = useState('5,000')
   const [desc, setDesc] = useState('Për drekën e djeshme')
 
@@ -37,7 +54,7 @@ export default function Transfer() {
           {transferTypes.map(t => (
             <div
               key={t.id}
-              onClick={() => setSelectedType(t.id)}
+              onClick={() => { setSelectedType(t.id); setSelectedContact(allContacts[t.id][0]); }}
               style={{
                 background: selectedType === t.id ? 'var(--primary-light)' : 'var(--surface)',
                 borderRadius: 'var(--radius)',
@@ -91,11 +108,23 @@ export default function Transfer() {
             <span>{selectedContact.name === 'Nensi' ? 'Nensi Berberi' : `${selectedContact.name} (kontakt)`}</span>
           </div>
 
-          <label className="form-label">IBAN</label>
-          <div className="form-input has-value">
-            <i className="ti ti-hash" aria-hidden="true" />
-            <span style={{ fontSize: 12, fontFamily: 'var(--mono)' }}>{selectedContact.iban}</span>
-          </div>
+          {selectedType === 'phone' ? (
+            <>
+              <label className="form-label">Numri i telefonit</label>
+              <div className="form-input has-value">
+                <i className="ti ti-phone" aria-hidden="true" />
+                <span style={{ fontSize: 14 }}>{selectedContact.phone}</span>
+              </div>
+            </>
+    ) : (
+      <>
+    <label className="form-label">IBAN</label>
+    <div className="form-input has-value">
+      <i className="ti ti-hash" aria-hidden="true" />
+      <span style={{ fontSize: 12, fontFamily: 'var(--mono)' }}>{selectedContact.iban}</span>
+    </div>
+  </>
+)}
         </div>
 
         {/* Amount */}
