@@ -33,13 +33,11 @@ export default function Dashboard() {
 
         {/* Balance Card */}
         <div style={{ background: 'var(--primary)', borderRadius: 'var(--radius)', padding: 18, color: '#fff', position: 'relative', overflow: 'hidden' }}>
-  <div style={{ position: 'absolute', right: -20, top: -30, width: 130, height: 130, borderRadius: '50%', background: 'rgba(255,255,255,0.07)' }} />
-  <p style={{ fontSize: 12, opacity: 0.75, marginBottom: 6 }}>AL47 2121 1009 0000 0002 3569 8741</p>
-  <p style={{ fontSize: 30, fontWeight: 600, letterSpacing: '-1.2px' }}>248,350 <span style={{ fontSize: 17, opacity: 0.75 }}>ALL</span></p>
-</div>
+          <div style={{ position: 'absolute', right: -20, top: -30, width: 130, height: 130, borderRadius: '50%', background: 'rgba(255,255,255,0.07)' }} />
+          <p style={{ fontSize: 12, opacity: 0.75, marginBottom: 6 }}>AL47 2121 1009 0000 0002 3569 8741</p>
+          <p style={{ fontSize: 30, fontWeight: 600, letterSpacing: '-1.2px' }}>248,350 <span style={{ fontSize: 17, opacity: 0.75 }}>ALL</span></p>
+        </div>
       </header>
-
-      <div className="scroll-area">
 
         {/* Transactions */}
         <p className="section-title">Transaksionet e fundit</p>
@@ -61,6 +59,7 @@ export default function Dashboard() {
           Shiko të gjitha →
         </p>
       </div>
+    <div className="scroll-area">
       {/* Exchange Rates */}
         <p className="section-title">Kursi i këmbimit</p>
         <div style={{ display: 'flex', gap: 8, padding: '0 18px' }}>
