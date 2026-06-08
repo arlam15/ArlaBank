@@ -34,10 +34,56 @@ export default function Dashboard() {
         {/* Balance Card */}
         <div style={{ background: 'var(--primary)', borderRadius: 'var(--radius)', padding: 18, color: '#fff', position: 'relative', overflow: 'hidden' }}>
           <div style={{ position: 'absolute', right: -20, top: -30, width: 130, height: 130, borderRadius: '50%', background: 'rgba(255,255,255,0.07)' }} />
-          <p style={{ fontSize: 12, opacity: 0.75, marginBottom: 6 }}>AL47 2121 1009 0000 0002 3569 8741</p>
-          <p style={{ fontSize: 30, fontWeight: 600, letterSpacing: '-1.2px' }}>248,350 <span style={{ fontSize: 17, opacity: 0.75 }}>ALL</span></p>
+          <div style={{ position: 'absolute', right: 24, bottom: -44, width: 110, height: 110, borderRadius: '50%', background: 'rgba(255,255,255,0.05)' }} />
+          <p style={{ fontSize: 11, opacity: 0.75, textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 4 }}>Gjendja totale</p>
+          <p style={{ fontSize: 30, fontWeight: 600, letterSpacing: '-1.2px', marginBottom: 14 }}>248,350 <span style={{ fontSize: 17, opacity: 0.75 }}>ALL</span></p>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div>
+              <p style={{ fontSize: 11, opacity: 0.7 }}>Llogari rrjedhëse</p>
+              <p style={{ fontSize: 14, fontWeight: 600 }}>184,200 ALL</p>
+            </div>
+            <div style={{ textAlign: 'right' }}>
+              <p style={{ fontSize: 11, opacity: 0.7 }}>Kartë debiti</p>
+              <p style={{ fontSize: 14, fontWeight: 600 }}>64,150 ALL</p>
+            </div>
+          </div>
         </div>
       </header>
+
+      <div className="scroll-area">
+        {/* Quick Actions */}
+        <p className="section-title">Veprime të shpejta</p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 10, padding: '0 18px' }}>
+          {[
+            { icon: 'ti-send', label: 'Dërgo', action: () => navigate('/transfer') },
+            { icon: 'ti-arrow-down-circle', label: 'Merr', action: null },
+            { icon: 'ti-receipt', label: 'Fatura', action: null },
+            { icon: 'ti-qrcode', label: 'QR Pay', action: null },
+          ].map(({ icon, label, action }) => (
+            <div key={label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, cursor: 'pointer' }} onClick={action}>
+              <div className="action-icon">
+                <i className={`ti ${icon}`} aria-hidden="true" />
+              </div>
+              <span style={{ fontSize: 11, color: 'var(--text2)', fontWeight: 500 }}>{label}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Exchange Rates */}
+        <p className="section-title">Kursi i këmbimit</p>
+        <div style={{ display: 'flex', gap: 8, padding: '0 18px' }}>
+          {[
+            { pair: 'EUR / ALL', rate: '108.40', change: '+0.2%' },
+            { pair: 'USD / ALL', rate: '99.10', change: '+0.1%' },
+            { pair: 'GBP / ALL', rate: '125.80', change: '+0.3%' },
+          ].map(fx => (
+            <div className="fx-chip" key={fx.pair}>
+              <p className="fx-pair">{fx.pair}</p>
+              <p className="fx-rate">{fx.rate}</p>
+              <p className="fx-change">{fx.change} sot</p>
+            </div>
+          ))}
+        </div>
 
         {/* Transactions */}
         <p className="section-title">Transaksionet e fundit</p>
@@ -59,22 +105,6 @@ export default function Dashboard() {
           Shiko të gjitha →
         </p>
       </div>
-    <div className="scroll-area">
-      {/* Exchange Rates */}
-        <p className="section-title">Kursi i këmbimit</p>
-        <div style={{ display: 'flex', gap: 8, padding: '0 18px' }}>
-          {[
-            { pair: 'EUR / ALL', rate: '108.40', change: '+0.2%' },
-            { pair: 'USD / ALL', rate: '99.10', change: '+0.1%' },
-            { pair: 'GBP / ALL', rate: '125.80', change: '+0.3%' },
-          ].map(fx => (
-            <div className="fx-chip" key={fx.pair}>
-              <p className="fx-pair">{fx.pair}</p>
-              <p className="fx-rate">{fx.rate}</p>
-              <p className="fx-change">{fx.change} sot</p>
-            </div>
-          ))}
-        </div>
 
       <BottomNav />
     </>
