@@ -75,24 +75,25 @@ export default function Transfer() {
         <p className="section-title">Kontaktet e fundit</p>
         <div style={{ display: 'flex', gap: 14, padding: '0 18px 14px', overflowX: 'auto', scrollbarWidth: 'none' }}>
           {contacts.map(c => (
-            <div
-              className="contact-chip"
-              key={c.name}
-              onClick={() => setSelectedContact(c)}
-            >
-              <div
-                className="contact-av"
-                style={{
-                  background: selectedContact.name === c.name ? '#fff' : c.bg,
-                  color: c.color,
-                  outline: selectedContact.name === c.name ? '3px solid var(--primary)' : '3px solid transparent',
-                  oulineOffset: '2px',
-                  boxSizing: 'border-box',
-                }}
-              >{c.initials}</div>
-              <span>{c.name}</span>
-            </div>
-          ))}
+  <div
+    className="contact-chip"
+    key={c.name}
+    onClick={() => setSelectedContact(c)}
+    style={{ padding: '4px' }}
+  >
+    <div style={{
+      width: 44, height: 44,
+      borderRadius: '50%',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      fontSize: 13, fontWeight: 600,
+      background: c.bg,
+      color: c.color,
+      boxShadow: selectedContact.name === c.name ? '0 0 0 3px var(--primary)' : '0 0 0 3px transparent',
+      transition: 'box-shadow 0.15s',
+    }}>{c.initials}</div>
+    <span>{c.name}</span>
+  </div>
+))}
           <div className="contact-chip">
             <div className="contact-av" style={{ background: 'var(--app-bg)', color: 'var(--text3)', border: '1px dashed var(--border)' }}>
               <i className="ti ti-plus" style={{ fontSize: 17 }} aria-hidden="true" />
