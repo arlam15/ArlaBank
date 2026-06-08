@@ -71,12 +71,12 @@ export default function Cards() {
         </div>
 
         {/* Limits */}
-        <p className="section-title">Limitet sot</p>
+        <p className="section-title">Limiti sot</p>
         <div style={{ padding: '0 18px', display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 12 }}>
           {[
-            { label: 'Limit ditor i blerjes', used: 50000, total: 100000, color: 'var(--primary)' },
-            { label: 'Limit ditor i ATM', used: 0, total: 30000, color: 'var(--success)' },
-            { label: 'Limit javor i transfertave', used: 15000, total: 50000, color: 'var(--warning)' },
+            { label: 'Buxheti ditor i blerjes', used: 50000, total: 100000, color: 'var(--primary)' },
+            { label: 'Limiti ditor i ATM', used: 0, total: 30000, color: 'var(--success)' },
+            { label: 'Limiti javor i transfertave', used: 15000, total: 50000, color: 'var(--warning)' },
           ].map(l => (
             <div key={l.label} style={{ background: 'var(--surface)', borderRadius: 'var(--radius-sm)', padding: '13px 15px', border: '0.5px solid var(--border)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 7 }}>
