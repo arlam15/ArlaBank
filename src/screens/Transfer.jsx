@@ -83,7 +83,7 @@ export default function Transfer() {
               <div
                 className="contact-av"
                 style={{
-                  background: c.bg,
+                  background: selectedContact.name === c.name ? '#fff' : c.bg,
                   color: c.color,
                   outline: selectedContact.name === c.name ? '3px solid var(--primary)' : '3px solid transparent',
                 }}
