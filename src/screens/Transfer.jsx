@@ -86,6 +86,8 @@ export default function Transfer() {
                   background: selectedContact.name === c.name ? '#fff' : c.bg,
                   color: c.color,
                   outline: selectedContact.name === c.name ? '3px solid var(--primary)' : '3px solid transparent',
+                  oulineOffset: '2px',
+                  boxSizing: 'border-box',
                 }}
               >{c.initials}</div>
               <span>{c.name}</span>
