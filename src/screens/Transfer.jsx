@@ -159,10 +159,16 @@ export default function Transfer() {
         {/* Description */}
         <div style={{ padding: '14px 18px 0' }}>
           <label className="form-label">Përshkrim (opsional)</label>
-          <div className="form-input has-value">
-            <i className="ti ti-message" aria-hidden="true" />
-            <span>{desc}</span>
-          </div>
+          <div className="form-input has-value" style={{ cursor: 'text' }}>
+  <i className="ti ti-message" aria-hidden="true" />
+  <input
+    type="text"
+    value={desc}
+    onChange={e => setDesc(e.target.value)}
+    placeholder="Shkruaj një përshkrim..."
+    style={{ border: 'none', background: 'transparent', outline: 'none', fontSize: 14, color: 'var(--text1)', fontFamily: 'var(--font)', width: '100%' }}
+  />
+</div>
         </div>
 
         <div style={{ padding: '8px 18px 16px' }}>
