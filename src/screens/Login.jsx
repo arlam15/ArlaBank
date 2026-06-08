@@ -12,7 +12,7 @@ export default function Login() {
         <div style={{ width: 38, height: 38, background: 'var(--primary)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <i className="ti ti-building-bank" style={{ fontSize: 20, color: '#fff' }} aria-hidden="true" />
         </div>
-        <span style={{ fontSize: 18, fontWeight: 600, color: 'var(--text1)', letterSpacing: '-0.3px' }}>Banka Ime</span>
+        <span style={{ fontSize: 18, fontWeight: 600, color: 'var(--text1)', letterSpacing: '-0.3px' }}>ArlaBank</span>
       </div>
 
       <h1 style={{ fontSize: 26, fontWeight: 600, color: 'var(--text1)', letterSpacing: '-0.6px', marginBottom: 6 }}>Mirë se vini</h1>
@@ -41,7 +41,7 @@ export default function Login() {
         <div style={{ width: 46, height: 46, background: 'var(--app-bg)', borderRadius: 13, border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <i className="ti ti-fingerprint" style={{ fontSize: 24, color: 'var(--primary)' }} aria-hidden="true" />
         </div>
-        <span style={{ fontSize: 13, color: 'var(--text2)' }}>Ose përdorni gjurmën e gishtit</span>
+        <span style={{ fontSize: 13, color: 'var(--text2)' }}>Hyni me Face ID</span>
       </div>
 
       <button className="btn-primary" onClick={() => navigate('/dashboard')}>
@@ -55,7 +55,7 @@ export default function Login() {
       {/* Footer note */}
       <p style={{ textAlign: 'center', marginTop: 'auto', paddingTop: 32, fontSize: 12, color: 'var(--text3)', lineHeight: 1.6 }}>
         <i className="ti ti-shield-check" style={{ fontSize: 14, verticalAlign: -2, marginRight: 4 }} aria-hidden="true" />
-        Lidhja e sigurt me enkriptim 256-bit
+        Aktivizoni mobile
       </p>
     </div>
   )
