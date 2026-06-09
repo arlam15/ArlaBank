@@ -371,3 +371,21 @@ html, body, #root {
 .confirm-row:last-child { border-bottom: none; }
 .confirm-key { font-size: 13px; color: var(--text3); }
 .confirm-val { font-size: 14px; color: var(--text1); font-weight: 500; }
+.theme-light {
+  --app-bg: #F4F6F9;
+  --surface: #FFFFFF;
+  --text1: #141C2E;
+  --text2: #546080;
+  --text3: #8A96B0;
+  --border: rgba(0,0,0,0.08);
+}
+
+.theme-dark {
+  --app-bg: #0F1117;
+  --surface: #1A1D27;
+  --text1: #F0F2F8;
+  --text2: #9AA3BC;
+  --text3: #5C6480;
+  --border: rgba(255,255,255,0.08);
+  --primary-light: rgba(45,107,228,0.2);
+}
