@@ -13,9 +13,9 @@ const transactions = [
 ]
 
 const notifications = [
-  { id: 1, icon: 'ti-arrow-down-circle', iconBg: 'var(--success-bg)', iconColor: 'var(--success)', title: 'Pagesa e rrogës u pranua', desc: '+120,000 ALL nga Punëdhënësi', time: 'Dje, 09:00' },
-  { id: 2, icon: 'ti-send', iconBg: '#EBF1FD', iconColor: 'var(--primary)', title: 'Transfertë e kryer', desc: '-5,000 ALL tek Nensi Berberi', time: '3 Qershor' },
-  { id: 3, icon: 'ti-bolt', iconBg: 'var(--warning-bg)', iconColor: 'var(--warning)', title: 'Fatura e OSHEE-s paguar', desc: '-4,200 ALL automatikisht', time: '4 Qershor' },
+  { id: 1, icon: 'ti-arrow-down-circle', iconBg: 'var(--success-bg)', iconColor: 'var(--success)', title: 'Llogaria juaj u kreditua me 120,000 ALL', desc: 'Pagesa e rrogës u pranua me sukses', time: 'Dje, 09:00' },
+  { id: 2, icon: 'ti-bolt', iconBg: 'var(--warning-bg)', iconColor: 'var(--warning)', title: 'Fatura e OSHEE-s paguar', desc: '-4,200 ALL u pagua automatikisht', time: '4 Qershor' },
+  { id: 3, icon: 'ti-send', iconBg: '#EBF1FD', iconColor: 'var(--primary)', title: 'Transfertë e kryer me sukses', desc: '-5,000 ALL tek Nensi Berberi', time: '3 Qershor' },
   { id: 4, icon: 'ti-shield-check', iconBg: 'var(--success-bg)', iconColor: 'var(--success)', title: 'Hyrje e re e verifikuar', desc: 'iPhone 14 Pro — Tiranë, AL', time: '5 Qershor' },
   { id: 5, icon: 'ti-building-bank', iconBg: '#EBF1FD', iconColor: 'var(--primary)', title: 'Ofertë e re nga ArlaBank', desc: 'Kredi me interes 3.5% — Shiko tani', time: '6 Qershor' },
 ]
@@ -24,7 +24,38 @@ export default function Dashboard() {
   const navigate = useNavigate()
   const [showNotifications, setShowNotifications] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
+  const [activeSettingsItem, setActiveSettingsItem] = useState(null)
   const { darkMode, setDarkMode } = useTheme()
+
+  const settingsItems = [
+    { icon: 'ti-user', label: 'Profili im', sub: 'Të dhënat personale', info: [
+      { label: 'Emri', val: 'Arla Mitrushi' },
+      { label: 'Email', val: 'arla.mitrushi@email.com' },
+      { label: 'Telefon', val: '+355 69 123 4567' },
+      { label: 'Nr. Klienti', val: '1234 5678' },
+    ]},
+    { icon: 'ti-shield-lock', label: 'Siguria', sub: 'PIN, biometrika, 2FA', info: [
+      { label: 'PIN', val: '••••' },
+      { label: 'Face ID', val: 'Aktivizuar' },
+      { label: '2FA', val: 'Aktivizuar' },
+      { label: 'Ndryshimi i fundit', val: '1 Qershor 2026' },
+    ]},
+    { icon: 'ti-bell', label: 'Njoftimet', sub: 'Menaxho njoftimet', info: [
+      { label: 'Transaksionet', val: 'Aktivizuar' },
+      { label: 'Ofertat', val: 'Aktivizuar' },
+      { label: 'Siguria', val: 'Aktivizuar' },
+      { label: 'Email', val: 'Çaktivizuar' },
+    ]},
+    { icon: 'ti-language', label: 'Gjuha', sub: 'Shqip', info: [
+      { label: 'Gjuha aktuale', val: 'Shqip' },
+      { label: 'Të disponueshme', val: 'Shqip, English, Italiano' },
+    ]},
+    { icon: 'ti-help-circle', label: 'Ndihmë', sub: 'FAQ dhe kontakt', info: [
+      { label: 'Telefon', val: '+355 4 123 4567' },
+      { label: 'Email', val: 'info@arlabank.al' },
+      { label: 'Orari', val: 'E Hënë–E Premte 08:00–20:00' },
+    ]},
+  ]
 
   return (
     <>
@@ -43,7 +74,7 @@ export default function Dashboard() {
                     <i className={`ti ${n.icon}`} style={{ fontSize: 17, color: n.iconColor }} aria-hidden="true" />
                   </div>
                   <div style={{ flex: 1 }}>
-                    <p style={{ fontSize: 14, fontWeight: 500, color: 'var(--text1)' }}>{n.title}</p>
+                    <p style={{ fontSize: 13, fontWeight: 600, color: 'var(--text1)', lineHeight: 1.4 }}>{n.title}</p>
                     <p style={{ fontSize: 12, color: 'var(--text2)', marginTop: 2 }}>{n.desc}</p>
                     <p style={{ fontSize: 11, color: 'var(--text3)', marginTop: 3 }}>{n.time}</p>
                   </div>
@@ -79,28 +110,35 @@ export default function Dashboard() {
                   <i className={`ti ${darkMode ? 'ti-moon' : 'ti-sun'}`} style={{ fontSize: 20, color: 'var(--text2)' }} aria-hidden="true" />
                   <div>
                     <p style={{ fontSize: 14, fontWeight: 500, color: 'var(--text1)' }}>{darkMode ? 'Night Mode' : 'Day Mode'}</p>
-                    <p style={{ fontSize: 12, color: 'var(--text3)' }}>{darkMode ? 'Aktiv' : 'Aktiv'}</p>
+                    <p style={{ fontSize: 12, color: 'var(--text3)' }}>Aktiv</p>
                   </div>
                 </div>
                 <div className={`toggle-pill ${darkMode ? 'on' : 'off'}`} onClick={() => setDarkMode(!darkMode)} />
               </div>
 
-              {[
-                { icon: 'ti-user', label: 'Profili im', sub: 'Të dhënat personale' },
-                { icon: 'ti-shield-lock', label: 'Siguria', sub: 'PIN, biometrika, 2FA' },
-                { icon: 'ti-bell', label: 'Njoftimet', sub: 'Menaxho njoftimet' },
-                { icon: 'ti-language', label: 'Gjuha', sub: 'Shqip' },
-                { icon: 'ti-help-circle', label: 'Ndihmë', sub: 'FAQ dhe kontakt' },
-              ].map(item => (
-                <div key={item.label} style={{ display: 'flex', alignItems: 'center', padding: '14px 18px', gap: 12, borderBottom: '0.5px solid var(--border)', cursor: 'pointer' }}>
-                  <div style={{ width: 36, height: 36, borderRadius: 10, background: 'var(--primary-light)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <i className={`ti ${item.icon}`} style={{ fontSize: 17, color: 'var(--primary)' }} aria-hidden="true" />
+              {/* Settings items */}
+              {settingsItems.map(item => (
+                <div key={item.label} onClick={() => setActiveSettingsItem(activeSettingsItem === item.label ? null : item.label)} style={{ borderBottom: '0.5px solid var(--border)', cursor: 'pointer' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', padding: '14px 18px', gap: 12 }}>
+                    <div style={{ width: 36, height: 36, borderRadius: 10, background: 'var(--primary-light)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <i className={`ti ${item.icon}`} style={{ fontSize: 17, color: 'var(--primary)' }} aria-hidden="true" />
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <p style={{ fontSize: 14, fontWeight: 500, color: 'var(--text1)' }}>{item.label}</p>
+                      <p style={{ fontSize: 12, color: 'var(--text3)' }}>{item.sub}</p>
+                    </div>
+                    <i className={`ti ${activeSettingsItem === item.label ? 'ti-chevron-up' : 'ti-chevron-right'}`} style={{ fontSize: 16, color: 'var(--text3)' }} aria-hidden="true" />
                   </div>
-                  <div style={{ flex: 1 }}>
-                    <p style={{ fontSize: 14, fontWeight: 500, color: 'var(--text1)' }}>{item.label}</p>
-                    <p style={{ fontSize: 12, color: 'var(--text3)' }}>{item.sub}</p>
-                  </div>
-                  <i className="ti ti-chevron-right" style={{ fontSize: 16, color: 'var(--text3)' }} aria-hidden="true" />
+                  {activeSettingsItem === item.label && (
+                    <div style={{ background: 'var(--app-bg)', padding: '8px 18px 12px' }}>
+                      {item.info.map(r => (
+                        <div key={r.label} style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', borderBottom: '0.5px solid var(--border)' }}>
+                          <span style={{ fontSize: 12, color: 'var(--text3)' }}>{r.label}</span>
+                          <span style={{ fontSize: 12, fontWeight: 500, color: 'var(--text1)' }}>{r.val}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ))}
 
@@ -125,12 +163,9 @@ export default function Dashboard() {
           <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
             <div style={{ position: 'relative', cursor: 'pointer' }} onClick={() => { setShowNotifications(true); setShowSettings(false) }}>
               <i className="ti ti-bell" style={{ fontSize: 22, color: 'var(--text2)' }} aria-hidden="true" />
-              <div style={{ position: 'absolute', top: -1, right: -2, width: 8, height: 8, borderRadius: '50%', background: 'var(--red)', border: '1.5px solid #fff' }} />
+              <div style={{ position: 'absolute', top: -1, right: -2, width: 8, height: 8, borderRadius: '50%', background: 'var(--red)', border: '1.5px solid var(--surface)' }} />
             </div>
-            <div
-              style={{ width: 38, height: 38, borderRadius: '50%', background: 'var(--primary-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 600, color: 'var(--primary)', cursor: 'pointer' }}
-              onClick={() => { setShowSettings(true); setShowNotifications(false) }}
-            >AM</div>
+            <div style={{ width: 38, height: 38, borderRadius: '50%', background: 'var(--primary-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 600, color: 'var(--primary)', cursor: 'pointer' }} onClick={() => { setShowSettings(true); setShowNotifications(false) }}>AM</div>
           </div>
         </div>
 
@@ -144,7 +179,6 @@ export default function Dashboard() {
       </header>
 
       <div className="scroll-area">
-        {/* Transactions */}
         <p className="section-title">Transaksionet e fundit</p>
         <div style={{ background: 'var(--surface)', borderRadius: 'var(--radius)', margin: '0 18px', overflow: 'hidden', border: '0.5px solid var(--border)' }}>
           {transactions.map(tx => (
@@ -164,7 +198,6 @@ export default function Dashboard() {
           Shiko të gjitha →
         </p>
 
-        {/* Exchange Rates */}
         <p className="section-title">Kursi i këmbimit</p>
         <div style={{ display: 'flex', gap: 8, padding: '0 18px', marginBottom: 16 }}>
           {[
