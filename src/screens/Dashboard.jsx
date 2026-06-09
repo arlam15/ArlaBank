@@ -24,7 +24,7 @@ export default function Dashboard() {
   const navigate = useNavigate()
   const [showNotifications, setShowNotifications] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
-  const [darkMode, setDarkMode] = useState(false)
+  const { darkMode, setDarkMode } = useTheme()
 
   return (
     <>
