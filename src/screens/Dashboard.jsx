@@ -14,7 +14,7 @@ const transactions = [
 
 const notifications = [
   { id: 1, icon: 'ti-arrow-down-circle', iconBg: 'var(--success-bg)', iconColor: 'var(--success)', title: 'Llogaria juaj u kreditua me 120,000 ALL', desc: 'Pagesa e rrogës u pranua me sukses', time: 'Dje, 09:00' },
-  { id: 2, icon: 'ti-bolt', iconBg: 'var(--warning-bg)', iconColor: 'var(--warning)', title: 'Fatura e OSHEE-s paguar', desc: '-4,200 ALL u pagua automatikisht', time: '4 Qershor' },
+  { id: 2, icon: 'ti-bolt', iconBg: 'var(--warning-bg)', iconColor: 'var(--warning)', title: 'Fatura e dritave OSHEE', desc: 'Llogaria u debitua me -4,200 ALL', time: '4 Qershor' },
   { id: 3, icon: 'ti-send', iconBg: '#EBF1FD', iconColor: 'var(--primary)', title: 'Transfertë e kryer me sukses', desc: '-5,000 ALL tek Nensi Berberi', time: '3 Qershor' },
   { id: 4, icon: 'ti-shield-check', iconBg: 'var(--success-bg)', iconColor: 'var(--success)', title: 'Hyrje e re e verifikuar', desc: 'iPhone 14 Pro — Tiranë, AL', time: '5 Qershor' },
   { id: 5, icon: 'ti-building-bank', iconBg: '#EBF1FD', iconColor: 'var(--primary)', title: 'Ofertë e re nga ArlaBank', desc: 'Kredi me interes 3.5% — Shiko tani', time: '6 Qershor' },
