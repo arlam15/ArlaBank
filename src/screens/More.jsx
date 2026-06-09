@@ -31,6 +31,55 @@ export default function More() {
         </div>
       )
     },
+    njoftime: {
+      title: 'Njoftimet',
+      content: (
+        <div>
+          {[
+            { icon: 'ti-arrow-down-circle', iconBg: 'var(--success-bg)', iconColor: 'var(--success)', title: 'Llogaria juaj u kreditua me 120,000 ALL', desc: 'Pagesa e rrogës u pranua me sukses', time: 'Dje, 09:00' },
+            { icon: 'ti-bolt', iconBg: 'var(--warning-bg)', iconColor: 'var(--warning)', title: 'Fatura e OSHEE-s paguar', desc: '-4,200 ALL u pagua automatikisht', time: '4 Qershor' },
+            { icon: 'ti-send', iconBg: '#EBF1FD', iconColor: 'var(--primary)', title: 'Transfertë e kryer me sukses', desc: '-5,000 ALL tek Nensi Berberi', time: '3 Qershor' },
+            { icon: 'ti-shield-check', iconBg: 'var(--success-bg)', iconColor: 'var(--success)', title: 'Hyrje e re e verifikuar', desc: 'iPhone 14 Pro — Tiranë, AL', time: '5 Qershor' },
+            { icon: 'ti-building-bank', iconBg: '#EBF1FD', iconColor: 'var(--primary)', title: 'Ofertë e re nga ArlaBank', desc: 'Kredi me interes 3.5% — Shiko tani', time: '6 Qershor' },
+          ].map((n, i) => (
+            <div key={i} style={{ display: 'flex', gap: 12, padding: '12px 0', borderBottom: '0.5px solid var(--border)' }}>
+              <div style={{ width: 40, height: 40, borderRadius: 12, background: n.iconBg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <i className={`ti ${n.icon}`} style={{ fontSize: 17, color: n.iconColor }} aria-hidden="true" />
+              </div>
+              <div style={{ flex: 1 }}>
+                <p style={{ fontSize: 13, fontWeight: 600, color: 'var(--text1)', lineHeight: 1.4 }}>{n.title}</p>
+                <p style={{ fontSize: 12, color: 'var(--text2)', marginTop: 2 }}>{n.desc}</p>
+                <p style={{ fontSize: 11, color: 'var(--text3)', marginTop: 3 }}>{n.time}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      )
+    },
+    siguria: {
+      title: 'Siguria',
+      content: (
+        <div>
+          {[
+            { label: 'PIN', val: '••••', icon: 'ti-lock' },
+            { label: 'Face ID', val: 'Aktivizuar', icon: 'ti-face-id' },
+            { label: '2FA', val: 'Aktivizuar', icon: 'ti-shield-check' },
+            { label: 'Ndryshimi i fundit', val: '1 Qershor 2026', icon: 'ti-calendar' },
+            { label: 'Pajisja aktive', val: 'iPhone 14 Pro', icon: 'ti-device-mobile' },
+          ].map(r => (
+            <div key={r.label} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 0', borderBottom: '0.5px solid var(--border)' }}>
+              <div style={{ width: 36, height: 36, borderRadius: 10, background: 'var(--primary-light)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <i className={`ti ${r.icon}`} style={{ fontSize: 16, color: 'var(--primary)' }} aria-hidden="true" />
+              </div>
+              <div style={{ flex: 1 }}>
+                <p style={{ fontSize: 14, color: 'var(--text2)' }}>{r.label}</p>
+              </div>
+              <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--text1)' }}>{r.val}</p>
+            </div>
+          ))}
+        </div>
+      )
+    },
     fatura: {
       title: 'Faturat e mia',
       content: (
@@ -145,8 +194,8 @@ export default function More() {
       title: 'Llogaria',
       items: [
         { icon: 'ti-user', label: 'Profili im', sub: 'Të dhënat personale', key: 'profile' },
-        { icon: 'ti-bell', label: 'Njoftimet', sub: 'Menaxho njoftimet', key: null },
-        { icon: 'ti-shield-lock', label: 'Siguria', sub: 'PIN, biometrika, 2FA', key: null },
+        { icon: 'ti-bell', label: 'Njoftimet', sub: 'Menaxho njoftimet', key: 'njoftime' },
+        { icon: 'ti-shield-lock', label: 'Siguria', sub: 'PIN, biometrika, 2FA', key: 'siguria' },
       ]
     },
     {
@@ -168,7 +217,6 @@ export default function More() {
 
   return (
     <>
-      {/* MODAL */}
       {activeModal && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 200, display: 'flex', alignItems: 'flex-end' }} onClick={() => setActiveModal(null)}>
           <div style={{ background: 'var(--surface)', borderRadius: '20px 20px 0 0', padding: '24px 24px 40px', width: '100%', maxHeight: '80vh', overflowY: 'auto' }} onClick={e => e.stopPropagation()}>
@@ -199,7 +247,7 @@ export default function More() {
             <p className="section-title">{group.title}</p>
             <div style={{ margin: '0 18px', background: 'var(--surface)', borderRadius: 'var(--radius)', border: '0.5px solid var(--border)', overflow: 'hidden' }}>
               {group.items.map((item, idx) => (
-                <div key={item.label} onClick={() => item.key && setActiveModal(item.key)} style={{ display: 'flex', alignItems: 'center', padding: '13px 16px', gap: 12, borderBottom: idx < group.items.length - 1 ? '0.5px solid var(--border)' : 'none', cursor: item.key ? 'pointer' : 'default', opacity: item.key ? 1 : 0.5 }}>
+                <div key={item.label} onClick={() => setActiveModal(item.key)} style={{ display: 'flex', alignItems: 'center', padding: '13px 16px', gap: 12, borderBottom: idx < group.items.length - 1 ? '0.5px solid var(--border)' : 'none', cursor: 'pointer' }}>
                   <div style={{ width: 36, height: 36, borderRadius: 10, background: 'var(--primary-light)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <i className={`ti ${item.icon}`} style={{ fontSize: 17, color: 'var(--primary)' }} aria-hidden="true" />
                   </div>
@@ -207,7 +255,7 @@ export default function More() {
                     <p style={{ fontSize: 14, fontWeight: 500, color: 'var(--text1)' }}>{item.label}</p>
                     <p style={{ fontSize: 12, color: 'var(--text3)', marginTop: 1 }}>{item.sub}</p>
                   </div>
-                  {item.key && <i className="ti ti-chevron-right" style={{ fontSize: 16, color: 'var(--text3)' }} aria-hidden="true" />}
+                  <i className="ti ti-chevron-right" style={{ fontSize: 16, color: 'var(--text3)' }} aria-hidden="true" />
                 </div>
               ))}
             </div>
