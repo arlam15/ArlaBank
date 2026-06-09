@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import BottomNav from '../components/BottomNav'
 
 const transferTypes = [
   { id: 'internal', icon: 'ti-users', name: 'Brenda bankës', desc: 'E menjëhershme' },
@@ -35,9 +36,15 @@ export default function Transfer() {
   const navigate = useNavigate()
   const [selectedType, setSelectedType] = useState('internal')
   const [selectedContact, setSelectedContact] = useState(allContacts.internal[0])
-  const contacts = allContacts[selectedType] || allContacts.internal
   const [amount, setAmount] = useState('5,000')
-  const [desc, setDesc] = useState('Për drekën e djeshme')
+  const [desc, setDesc] = useState('')
+  const [iban, setIban] = useState('')
+  const [phone, setPhone] = useState('')
+
+  const contacts = allContacts[selectedType] || allContacts.internal
+
+  const showIban = selectedType === 'local' || selectedType === 'intl'
+  const showPhone = selectedType === 'phone'
 
   return (
     <>
@@ -54,7 +61,12 @@ export default function Transfer() {
           {transferTypes.map(t => (
             <div
               key={t.id}
-              onClick={() => { setSelectedType(t.id); setSelectedContact(allContacts[t.id][0]); }}
+              onClick={() => {
+                setSelectedType(t.id)
+                setSelectedContact(allContacts[t.id][0])
+                setIban('')
+                setPhone('')
+              }}
               style={{
                 background: selectedType === t.id ? 'var(--primary-light)' : 'var(--surface)',
                 borderRadius: 'var(--radius)',
@@ -71,62 +83,78 @@ export default function Transfer() {
           ))}
         </div>
 
-        {/* Recent contacts */}
+        {/* Contacts */}
         <p className="section-title">Kontaktet e fundit</p>
         <div style={{ display: 'flex', gap: 14, padding: '0 18px 14px', overflowX: 'auto', scrollbarWidth: 'none' }}>
           {contacts.map(c => (
-  <div
-    className="contact-chip"
-    key={c.name}
-    onClick={() => setSelectedContact(c)}
-    style={{ padding: '4px' }}
-  >
-    <div style={{
-      width: 44, height: 44,
-      borderRadius: '50%',
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
-      fontSize: 13, fontWeight: 600,
-      background: c.bg,
-      color: c.color,
-      boxShadow: selectedContact.name === c.name ? '0 0 0 3px var(--primary)' : '0 0 0 3px transparent',
-      transition: 'box-shadow 0.15s',
-    }}>{c.initials}</div>
-    <span>{c.name}</span>
-  </div>
-))}
-          <div className="contact-chip">
-            <div className="contact-av" style={{ background: 'var(--app-bg)', color: 'var(--text3)', border: '1px dashed var(--border)' }}>
+            <div
+              className="contact-chip"
+              key={c.name}
+              onClick={() => setSelectedContact(c)}
+              style={{ padding: '4px' }}
+            >
+              <div style={{
+                width: 44, height: 44,
+                borderRadius: '50%',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: 13, fontWeight: 600,
+                background: c.bg,
+                color: c.color,
+                boxShadow: selectedContact.name === c.name ? '0 0 0 3px var(--primary)' : '0 0 0 3px transparent',
+                transition: 'box-shadow 0.15s',
+              }}>{c.initials}</div>
+              <span>{c.name}</span>
+            </div>
+          ))}
+          <div className="contact-chip" style={{ padding: '4px' }}>
+            <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'var(--app-bg)', color: 'var(--text3)', border: '1px dashed var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <i className="ti ti-plus" style={{ fontSize: 17 }} aria-hidden="true" />
             </div>
             <span>Shto</span>
           </div>
         </div>
 
-        {/* Recipient info */}
+        {/* Recipient */}
         <div style={{ padding: '0 18px' }}>
           <label className="form-label">Marrësi</label>
           <div className="form-input has-value">
             <i className="ti ti-user" aria-hidden="true" />
-            <span>{selectedContact.name === 'Nensi' ? 'Nensi Berberi' : `${selectedContact.name} (kontakt)`}</span>
+            <span>{selectedContact.name === 'Nensi' && selectedType === 'internal' ? 'Nensi Berberi' : selectedContact.name}</span>
           </div>
 
-          {selectedType === 'phone' ? (
+          {/* IBAN — vetëm për local dhe intl, i shkrueshëm */}
+          {showIban && (
             <>
-              <label className="form-label">Numri i telefonit</label>
-              <div className="form-input has-value">
-                <i className="ti ti-phone" aria-hidden="true" />
-                <span style={{ fontSize: 14 }}>{selectedContact.phone}</span>
+              <label className="form-label">IBAN</label>
+              <div className="form-input" style={{ background: 'var(--app-bg)', border: '1.5px solid var(--border)' }}>
+                <i className="ti ti-hash" aria-hidden="true" />
+                <input
+                  type="text"
+                  value={iban}
+                  onChange={e => setIban(e.target.value)}
+                  placeholder="AL47 2121 ..."
+                  style={{ border: 'none', background: 'transparent', outline: 'none', fontSize: 13, color: 'var(--text1)', fontFamily: 'var(--mono)', width: '100%' }}
+                />
               </div>
             </>
-    ) : (
-      <>
-    <label className="form-label">IBAN</label>
-    <div className="form-input has-value">
-      <i className="ti ti-hash" aria-hidden="true" />
-      <span style={{ fontSize: 12, fontFamily: 'var(--mono)' }}>{selectedContact.iban}</span>
-    </div>
-  </>
-)}
+          )}
+
+          {/* Telefoni — vetëm për phone */}
+          {showPhone && (
+            <>
+              <label className="form-label">Numri i telefonit</label>
+              <div className="form-input" style={{ background: 'var(--app-bg)', border: '1.5px solid var(--border)' }}>
+                <i className="ti ti-phone" aria-hidden="true" />
+                <input
+                  type="text"
+                  value={phone || selectedContact.phone}
+                  onChange={e => setPhone(e.target.value)}
+                  placeholder="+355 6X XXX XXXX"
+                  style={{ border: 'none', background: 'transparent', outline: 'none', fontSize: 14, color: 'var(--text1)', fontFamily: 'var(--font)', width: '100%' }}
+                />
+              </div>
+            </>
+          )}
         </div>
 
         {/* Amount */}
@@ -136,21 +164,18 @@ export default function Transfer() {
           <p className="amount-sub">Gjendja: 184,200 ALL</p>
         </div>
 
-        {/* Numpad quick amounts */}
+        {/* Quick amounts */}
         <div style={{ display: 'flex', gap: 8, padding: '0 18px 4px' }}>
           {['1,000', '2,000', '5,000', '10,000'].map(a => (
             <div
               key={a}
               onClick={() => setAmount(a)}
               style={{
-                flex: 1,
-                padding: '8px 0',
-                textAlign: 'center',
+                flex: 1, padding: '8px 0', textAlign: 'center',
                 borderRadius: 10,
                 background: amount === a ? 'var(--primary-light)' : 'var(--surface)',
                 border: amount === a ? '1px solid var(--primary)' : '0.5px solid var(--border)',
-                fontSize: 12,
-                fontWeight: 600,
+                fontSize: 12, fontWeight: 600,
                 color: amount === a ? 'var(--primary)' : 'var(--text2)',
                 cursor: 'pointer',
               }}
@@ -161,16 +186,16 @@ export default function Transfer() {
         {/* Description */}
         <div style={{ padding: '14px 18px 0' }}>
           <label className="form-label">Përshkrim (opsional)</label>
-          <div className="form-input has-value" style={{ cursor: 'text' }}>
-  <i className="ti ti-message" aria-hidden="true" />
-  <input
-    type="text"
-    value={desc}
-    onChange={e => setDesc(e.target.value)}
-    placeholder="Shkruaj një përshkrim..."
-    style={{ border: 'none', background: 'transparent', outline: 'none', fontSize: 14, color: 'var(--text1)', fontFamily: 'var(--font)', width: '100%' }}
-  />
-</div>
+          <div className="form-input" style={{ background: 'var(--app-bg)' }}>
+            <i className="ti ti-message" aria-hidden="true" />
+            <input
+              type="text"
+              value={desc}
+              onChange={e => setDesc(e.target.value)}
+              placeholder="Shkruaj një përshkrim..."
+              style={{ border: 'none', background: 'transparent', outline: 'none', fontSize: 14, color: 'var(--text1)', fontFamily: 'var(--font)', width: '100%' }}
+            />
+          </div>
         </div>
 
         <div style={{ padding: '8px 18px 16px' }}>
@@ -183,6 +208,8 @@ export default function Transfer() {
           </p>
         </div>
       </div>
+
+      <BottomNav />
     </>
   )
 }
