@@ -23,7 +23,7 @@ function KontaktContent() {
     let answer = 'Për këtë pyetje ju lutemi kontaktoni bankën në +355 4 123 4567.'
 
     if (q.includes('transfert') || q.includes('dërgoj') || q.includes('dergoj')) {
-      answer = 'Për të bërë një transfertë, shkoni te butoni "Dërgo" në faqen kryesore. Transfertat brenda ArlaBank janë të menjëhershme dhe falas. Transfertat jashtë bankës kostojnë 150 ALL dhe zgjasin 1-2 ditë pune.'
+      answer = 'Për të bërë një transfertë, shkoni te butoni "Dërgo" në faqen kryesore. Transfertat brenda ArlaBank janë të menjëhershme dhe falas. Transfertat jashtë bankës kushtojnë 150 ALL dhe zgjasin 1-2 ditë pune.'
     } else if (q.includes('bllok') || q.includes('kartë') || q.includes('karte')) {
       answer = 'Për të bllokuar kartën tuaj, shkoni te faqja "Karta" → butoni "Blloko". Karta bllokohet menjëherë. Mund ta zhbllokoni në çdo moment nga e njëjta faqe.'
     } else if (q.includes('pin')) {
@@ -37,9 +37,9 @@ function KontaktContent() {
     } else if (q.includes('tarif') || q.includes('komision') || q.includes('pagese') || q.includes('pagesë')) {
       answer = 'Tarifat kryesore: Transferta brenda ArlaBank — falas. Transferta jashtë bankës — 150 ALL. Tërheqje ATM ArlaBank — falas. Tërheqje ATM tjetër — 200 ALL. Pagesa faturash — falas.'
     } else if (q.includes('fjalëkalim') || q.includes('fjalekalim') || q.includes('password')) {
-      answer = 'Nëse keni harruar fjalëkalimin, në faqen e Login-it klikoni "Keni harruar fjalëkalimin?" dhe do t\'ju dërgohet një kod verifikimi në numrin tuaj të telefonit.'
+      answer = 'Nëse keni harruar fjalëkalimin, në faqen e Login-it klikoni "Keni harruar fjalëkalimin?" dhe do t'ju dërgohet një kod verifikimi në numrin tuaj të telefonit.'
     } else if (q.includes('fatur')) {
-      answer = 'Pagesat e faturave (OSHEE, UKT, Vodafone etj.) mund t\'i bëni nga faqja "Dërgo" → zgjidhni operatorin. Faturat e regjistruara paguhen automatikisht çdo muaj.'
+      answer = 'Pagesat e faturave (OSHEE, UKT, Vodafone etj.) mund t'i bëni nga faqja "Dërgo" → zgjidhni operatorin. Faturat e regjistruara paguhen automatikisht çdo muaj.'
     } else if (q.includes('ndihm') || q.includes('problem') || q.includes('gabim')) {
       answer = 'Për çdo problem teknik ose ndihmë, mund të na kontaktoni: Telefon: +355 4 123 4567 (E Hënë–E Premte 08:00–20:00) ose Email: info@arlabank.al. Përgjigemi brenda 24 orëve.'
     }
