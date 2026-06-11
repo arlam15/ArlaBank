@@ -217,12 +217,28 @@ export default function More() {
   return (
     <>
       {activeModal && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 200, display: 'flex', alignItems: 'flex-end' }} onClick={() => setActiveModal(null)}>
-          <div style={{ background: 'var(--surface)', borderRadius: '20px 20px 0 0', padding: '24px 24px 40px', width: '100%', maxHeight: '80vh', overflowY: 'auto' }} onClick={e => e.stopPropagation()}>
-            <div style={{ width: 40, height: 4, borderRadius: 2, background: 'var(--border)', margin: '0 auto 20px' }} />
-            <h2 style={{ fontSize: 18, fontWeight: 600, color: 'var(--text1)', marginBottom: 20 }}>{modals[activeModal].title}</h2>
-            {modals[activeModal].content}
-            <button className="btn-secondary" style={{ width: '100%', marginTop: 20 }} onClick={() => setActiveModal(null)}>Mbyll</button>
+        <div
+          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 200, display: 'flex', alignItems: 'flex-end' }}
+          onClick={() => setActiveModal(null)}
+        >
+          <div
+            style={{ background: 'var(--surface)', borderRadius: '20px 20px 0 0', width: '100%', maxHeight: '80vh', overflowY: 'auto' }}
+            onClick={e => e.stopPropagation()}
+          >
+            {/* DRAG HANDLE — klikueshëm për të mbyllur */}
+            <div
+              onClick={() => setActiveModal(null)}
+              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '14px 0 6px', cursor: 'pointer' }}
+            >
+              <div style={{ width: 40, height: 4, borderRadius: 2, background: 'var(--text3)', opacity: 0.4 }} />
+            </div>
+
+            {/* CONTENT */}
+            <div style={{ padding: '8px 24px 40px' }}>
+              <h2 style={{ fontSize: 18, fontWeight: 600, color: 'var(--text1)', marginBottom: 20 }}>{modals[activeModal].title}</h2>
+              {modals[activeModal].content}
+              <button className="btn-secondary" style={{ width: '100%', marginTop: 20 }} onClick={() => setActiveModal(null)}>Mbyll</button>
+            </div>
           </div>
         </div>
       )}
@@ -232,7 +248,10 @@ export default function More() {
       </header>
 
       <div className="scroll-area">
-        <div style={{ margin: '16px 18px', background: 'var(--surface)', borderRadius: 'var(--radius)', padding: '16px', border: '0.5px solid var(--border)', display: 'flex', alignItems: 'center', gap: 14, cursor: 'pointer' }} onClick={() => setActiveModal('profile')}>
+        <div
+          style={{ margin: '16px 18px', background: 'var(--surface)', borderRadius: 'var(--radius)', padding: '16px', border: '0.5px solid var(--border)', display: 'flex', alignItems: 'center', gap: 14, cursor: 'pointer' }}
+          onClick={() => setActiveModal('profile')}
+        >
           <div style={{ width: 52, height: 52, borderRadius: '50%', background: 'var(--primary-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, fontWeight: 600, color: 'var(--primary)', flexShrink: 0 }}>AM</div>
           <div style={{ flex: 1 }}>
             <p style={{ fontSize: 16, fontWeight: 600, color: 'var(--text1)' }}>Arla Mitrushi</p>
@@ -246,7 +265,11 @@ export default function More() {
             <p className="section-title">{group.title}</p>
             <div style={{ margin: '0 18px', background: 'var(--surface)', borderRadius: 'var(--radius)', border: '0.5px solid var(--border)', overflow: 'hidden' }}>
               {group.items.map((item, idx) => (
-                <div key={item.label} onClick={() => setActiveModal(item.key)} style={{ display: 'flex', alignItems: 'center', padding: '13px 16px', gap: 12, borderBottom: idx < group.items.length - 1 ? '0.5px solid var(--border)' : 'none', cursor: 'pointer' }}>
+                <div
+                  key={item.label}
+                  onClick={() => setActiveModal(item.key)}
+                  style={{ display: 'flex', alignItems: 'center', padding: '13px 16px', gap: 12, borderBottom: idx < group.items.length - 1 ? '0.5px solid var(--border)' : 'none', cursor: 'pointer' }}
+                >
                   <div style={{ width: 36, height: 36, borderRadius: 10, background: 'var(--primary-light)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <i className={`ti ${item.icon}`} style={{ fontSize: 17, color: 'var(--primary)' }} aria-hidden="true" />
                   </div>
@@ -262,7 +285,10 @@ export default function More() {
         ))}
 
         <div style={{ padding: '20px 18px 8px' }}>
-          <button style={{ width: '100%', height: 48, background: 'var(--red-bg)', border: 'none', borderRadius: 'var(--radius)', color: 'var(--red)', fontSize: 15, fontWeight: 600, fontFamily: 'var(--font)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }} onClick={() => navigate('/login')}>
+          <button
+            style={{ width: '100%', height: 48, background: 'var(--red-bg)', border: 'none', borderRadius: 'var(--radius)', color: 'var(--red)', fontSize: 15, fontWeight: 600, fontFamily: 'var(--font)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}
+            onClick={() => navigate('/login')}
+          >
             <i className="ti ti-logout" style={{ fontSize: 18 }} aria-hidden="true" />
             Dilni nga llogaria
           </button>
