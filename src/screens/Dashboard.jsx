@@ -71,7 +71,7 @@ function AiChat() {
         <div style={{ marginLeft: 'auto', width: 8, height: 8, borderRadius: '50%', background: '#4ADE80' }} />
       </div>
 
-      <div style={{ height: 220, overflowY: 'auto', padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+      <div style={{ height: 150, overflowY: 'auto', padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: 10 }}>
         {messages.map((m, i) => (
           <div key={i} style={{ display: 'flex', justifyContent: m.role === 'user' ? 'flex-end' : 'flex-start', gap: 8 }}>
             {m.role === 'assistant' && (
@@ -310,7 +310,7 @@ export default function Dashboard() {
         </div>
 
         <p className="section-title">Asistenti virtual</p>
-        <div style={{ margin: '0 10px 16px'}}>
+        <div style={{ margin: '0 18px 16px'}}>
           <AiChat />
         </div>
       </div>
