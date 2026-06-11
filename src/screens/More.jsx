@@ -2,6 +2,142 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import BottomNav from '../components/BottomNav'
 
+function KontaktContent() {
+  const [showChat, setShowChat] = useState(false)
+  const [messages, setMessages] = useState([
+    { role: 'assistant', content: 'Përshëndetje! Jam asistenti virtual i ArlaBank. Si mund t\'ju ndihmoj sot?' }
+  ])
+  const [input, setInput] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  const sendMessage = async () => {
+    if (!input.trim()) return
+    const userMsg = { role: 'user', content: input }
+    setMessages(prev => [...prev, userMsg])
+    setInput('')
+    setLoading(true)
+
+    await new Promise(r => setTimeout(r, 800))
+
+    const q = input.toLowerCase()
+    let answer = 'Për këtë pyetje ju lutemi kontaktoni bankën në +355 4 123 4567.'
+
+    if (q.includes('transfert') || q.includes('dërgoj') || q.includes('dergoj')) {
+      answer = 'Për të bërë një transfertë, shkoni te butoni "Dërgo" në faqen kryesore. Transfertat brenda ArlaBank janë të menjëhershme dhe falas. Transfertat jashtë bankës kostojnë 150 ALL dhe zgjasin 1-2 ditë pune.'
+    } else if (q.includes('bllok') || q.includes('kartë') || q.includes('karte')) {
+      answer = 'Për të bllokuar kartën tuaj, shkoni te faqja "Karta" → butoni "Blloko". Karta bllokohet menjëherë. Mund ta zhbllokoni në çdo moment nga e njëjta faqe.'
+    } else if (q.includes('pin')) {
+      answer = 'PIN-in tuaj mund ta shikoni te faqja "Karta" → butoni "PIN-i". Për siguri, PIN-i shfaqet vetëm pas konfirmimit. Nëse dëshironi të ndryshoni PIN-in, vizitoni degën më të afërt.'
+    } else if (q.includes('orar') || q.includes('deg')) {
+      answer = 'Degët e ArlaBank janë të hapura E Hënë deri E Premte, nga ora 08:00 deri 16:00. ATM-të janë të disponueshme 24 orë. Për të gjetur degën më të afërt, shkoni te "Më shumë" → "Degët & ATM".'
+    } else if (q.includes('kurs') || q.includes('valut') || q.includes('euro') || q.includes('dollar')) {
+      answer = 'Kurset aktuale të këmbimit: EUR/ALL = 108.40, USD/ALL = 99.10, GBP/ALL = 125.80. Kurset përditësohen çdo ditë pune. Mund t\'i gjeni gjithmonë në faqen kryesore të app-it.'
+    } else if (q.includes('llogari') || q.includes('hap')) {
+      answer = 'Për të hapur një llogari të re në ArlaBank, duhet të vizitoni degën më të afërt me kartën tuaj të identitetit. Procesi zgjat rreth 30 minuta. Mund të na kontaktoni në +355 4 123 4567 për informacion shtesë.'
+    } else if (q.includes('tarif') || q.includes('komision') || q.includes('pagese') || q.includes('pagesë')) {
+      answer = 'Tarifat kryesore: Transferta brenda ArlaBank — falas. Transferta jashtë bankës — 150 ALL. Tërheqje ATM ArlaBank — falas. Tërheqje ATM tjetër — 200 ALL. Pagesa faturash — falas.'
+    } else if (q.includes('fjalëkalim') || q.includes('fjalekalim') || q.includes('password')) {
+      answer = 'Nëse keni harruar fjalëkalimin, në faqen e Login-it klikoni "Keni harruar fjalëkalimin?" dhe do t\'ju dërgohet një kod verifikimi në numrin tuaj të telefonit.'
+    } else if (q.includes('fatur')) {
+      answer = 'Pagesat e faturave (OSHEE, UKT, Vodafone etj.) mund t\'i bëni nga faqja "Dërgo" → zgjidhni operatorin. Faturat e regjistruara paguhen automatikisht çdo muaj.'
+    } else if (q.includes('ndihm') || q.includes('problem') || q.includes('gabim')) {
+      answer = 'Për çdo problem teknik ose ndihmë, mund të na kontaktoni: Telefon: +355 4 123 4567 (E Hënë–E Premte 08:00–20:00) ose Email: info@arlabank.al. Përgjigemi brenda 24 orëve.'
+    }
+
+    setMessages(prev => [...prev, { role: 'assistant', content: answer }])
+    setLoading(false)
+  }
+
+  if (showChat) {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', height: '60vh' }}>
+        <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 12, paddingBottom: 8 }}>
+          {messages.map((m, i) => (
+            <div key={i} style={{ display: 'flex', justifyContent: m.role === 'user' ? 'flex-end' : 'flex-start' }}>
+              {m.role === 'assistant' && (
+                <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'var(--primary-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 8, flexShrink: 0 }}>
+                  <i className="ti ti-building-bank" style={{ fontSize: 13, color: 'var(--primary)' }} aria-hidden="true" />
+                </div>
+              )}
+              <div style={{
+                maxWidth: '75%',
+                padding: '10px 14px',
+                borderRadius: m.role === 'user' ? '16px 16px 4px 16px' : '16px 16px 16px 4px',
+                background: m.role === 'user' ? 'var(--primary)' : 'var(--app-bg)',
+                color: m.role === 'user' ? '#fff' : 'var(--text1)',
+                fontSize: 13,
+                lineHeight: 1.5,
+              }}>
+                {m.content}
+              </div>
+            </div>
+          ))}
+          {loading && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'var(--primary-light)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <i className="ti ti-building-bank" style={{ fontSize: 13, color: 'var(--primary)' }} aria-hidden="true" />
+              </div>
+              <div style={{ background: 'var(--app-bg)', borderRadius: '16px 16px 16px 4px', padding: '10px 14px', fontSize: 13, color: 'var(--text3)' }}>
+                Duke shkruar...
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div style={{ display: 'flex', gap: 8, paddingTop: 12, borderTop: '0.5px solid var(--border)' }}>
+          <input
+            type="text"
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && sendMessage()}
+            placeholder="Shkruaj një pyetje..."
+            style={{ flex: 1, height: 42, borderRadius: 10, border: '1px solid var(--border)', background: 'var(--app-bg)', padding: '0 14px', fontSize: 13, fontFamily: 'var(--font)', color: 'var(--text1)', outline: 'none' }}
+          />
+          <div
+            onClick={sendMessage}
+            style={{ width: 42, height: 42, borderRadius: 10, background: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}
+          >
+            <i className="ti ti-send" style={{ fontSize: 17, color: '#fff' }} aria-hidden="true" />
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+      {[
+        { icon: 'ti-phone', val: '+355 4 123 4567', sub: 'E Hënë–E Premte, 08:00–20:00' },
+        { icon: 'ti-mail', val: 'info@arlabank.al', sub: 'Përgjigje brenda 24 orëve' },
+      ].map(c => (
+        <div key={c.val} style={{ display: 'flex', alignItems: 'center', gap: 14, background: 'var(--app-bg)', borderRadius: 'var(--radius-sm)', padding: '14px 16px' }}>
+          <div style={{ width: 42, height: 42, borderRadius: 12, background: 'var(--primary-light)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <i className={`ti ${c.icon}`} style={{ fontSize: 20, color: 'var(--primary)' }} aria-hidden="true" />
+          </div>
+          <div>
+            <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--text1)' }}>{c.val}</p>
+            <p style={{ fontSize: 12, color: 'var(--text3)' }}>{c.sub}</p>
+          </div>
+        </div>
+      ))}
+
+      <div
+        onClick={() => setShowChat(true)}
+        style={{ display: 'flex', alignItems: 'center', gap: 14, background: 'var(--primary)', borderRadius: 'var(--radius-sm)', padding: '14px 16px', cursor: 'pointer' }}
+      >
+        <div style={{ width: 42, height: 42, borderRadius: 12, background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <i className="ti ti-message-circle" style={{ fontSize: 20, color: '#fff' }} aria-hidden="true" />
+        </div>
+        <div>
+          <p style={{ fontSize: 14, fontWeight: 600, color: '#fff' }}>Fillo bisedën</p>
+          <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.75)' }}>Asistent virtual — disponibël tani</p>
+        </div>
+        <i className="ti ti-chevron-right" style={{ fontSize: 16, color: 'rgba(255,255,255,0.75)', marginLeft: 'auto' }} aria-hidden="true" />
+      </div>
+    </div>
+  )
+}
+
 export default function More() {
   const navigate = useNavigate()
   const [activeModal, setActiveModal] = useState(null)
@@ -36,8 +172,8 @@ export default function More() {
       content: (
         <div>
           {[
-            { icon: 'ti-arrow-down-circle', iconBg: 'var(--success-bg)', iconColor: 'var(--success)', title: 'Llogaria juaj u kreditua me 120,000 ALL', desc: 'Paga kaloi me sukses', time: 'Dje, 09:00' },
-            { icon: 'ti-bolt', iconBg: 'var(--warning-bg)', iconColor: 'var(--warning)', title: 'Fatura e dritave OSHEE', desc: 'Llogaria u debitua me -4,200 ALL', time: '4 Qershor' },
+            { icon: 'ti-arrow-down-circle', iconBg: 'var(--success-bg)', iconColor: 'var(--success)', title: 'Llogaria juaj u kreditua me 120,000 ALL', desc: 'Pagesa e rrogës u pranua me sukses', time: 'Dje, 09:00' },
+            { icon: 'ti-bolt', iconBg: 'var(--warning-bg)', iconColor: 'var(--warning)', title: 'Fatura e dritave OSHEE paguar', desc: '-4,200 ALL u pagua automatikisht', time: '4 Qershor' },
             { icon: 'ti-send', iconBg: '#EBF1FD', iconColor: 'var(--primary)', title: 'Transfertë e kryer me sukses', desc: '-5,000 ALL tek Nensi Berberi', time: '3 Qershor' },
             { icon: 'ti-shield-check', iconBg: 'var(--success-bg)', iconColor: 'var(--success)', title: 'Hyrje e re e verifikuar', desc: 'iPhone 14 Pro — Tiranë, AL', time: '5 Qershor' },
             { icon: 'ti-building-bank', iconBg: '#EBF1FD', iconColor: 'var(--primary)', title: 'Ofertë e re nga ArlaBank', desc: 'Kredi me interes 3.5% — Shiko tani', time: '6 Qershor' },
@@ -148,25 +284,7 @@ export default function More() {
     },
     kontakt: {
       title: 'Kontakto bankën',
-      content: (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          {[
-            { icon: 'ti-phone', label: 'Telefon', val: '+355 4 123 4567', sub: 'E Hënë–E Premte, 08:00–20:00' },
-            { icon: 'ti-mail', label: 'Email', val: 'info@arlabank.al', sub: 'Përgjigje brenda 24 orëve' },
-            { icon: 'ti-message-circle', label: 'Chat live', val: 'Fillo bisedën', sub: 'Disponibël tani' },
-          ].map(c => (
-            <div key={c.label} style={{ display: 'flex', alignItems: 'center', gap: 14, background: 'var(--app-bg)', borderRadius: 'var(--radius-sm)', padding: '14px 16px' }}>
-              <div style={{ width: 42, height: 42, borderRadius: 12, background: 'var(--primary-light)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <i className={`ti ${c.icon}`} style={{ fontSize: 20, color: 'var(--primary)' }} aria-hidden="true" />
-              </div>
-              <div>
-                <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--text1)' }}>{c.val}</p>
-                <p style={{ fontSize: 12, color: 'var(--text3)' }}>{c.sub}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      )
+      content: <KontaktContent />
     },
     faq: {
       title: 'Pyetjet e shpeshta',
