@@ -36,7 +36,7 @@ function AiChat() {
     await new Promise(r => setTimeout(r, 800))
     const q = input.toLowerCase()
     let answer = 'Për këtë pyetje ju lutemi kontaktoni bankën në +355 4 123 4567.'
-    if (q.includes('transfert') || q.includes('dërgoj') || q.includes('dergoj')) {
+    if (q.includes('transfert') || q.includes('dërgoj') || q.includes('dergoj') || q.includes('transaksione') ) {
       answer = 'Për të bërë një transfertë, shkoni te butoni "Dërgo" në faqen kryesore. Transfertat brenda ArlaBank janë të menjëhershme dhe falas. Transfertat jashtë bankës kostojnë 150 ALL dhe zgjasin 1-2 ditë pune.'
     } else if (q.includes('bllok') || q.includes('kartë') || q.includes('karte')) {
       answer = 'Për të bllokuar kartën tuaj, shkoni te faqja "Karta" → butoni "Blloko". Karta bllokohet menjëherë. Mund ta zhbllokoni në çdo moment nga e njëjta faqe.'
