@@ -14,11 +14,112 @@ const transactions = [
 
 const notifications = [
   { id: 1, icon: 'ti-arrow-down-circle', iconBg: 'var(--success-bg)', iconColor: 'var(--success)', title: 'Llogaria juaj u kreditua me 120,000 ALL', desc: 'Pagesa e rrogës u pranua me sukses', time: 'Dje, 09:00' },
-  { id: 2, icon: 'ti-bolt', iconBg: 'var(--warning-bg)', iconColor: 'var(--warning)', title: 'Fatura e dritave OSHEE', desc: 'Llogaria u debitua me -4,200 ALL', time: '4 Qershor' },
+  { id: 2, icon: 'ti-bolt', iconBg: 'var(--warning-bg)', iconColor: 'var(--warning)', title: 'Fatura e dritave OSHEE paguar', desc: '-4,200 ALL u pagua automatikisht', time: '4 Qershor' },
   { id: 3, icon: 'ti-send', iconBg: '#EBF1FD', iconColor: 'var(--primary)', title: 'Transfertë e kryer me sukses', desc: '-5,000 ALL tek Nensi Berberi', time: '3 Qershor' },
   { id: 4, icon: 'ti-shield-check', iconBg: 'var(--success-bg)', iconColor: 'var(--success)', title: 'Hyrje e re e verifikuar', desc: 'iPhone 14 Pro — Tiranë, AL', time: '5 Qershor' },
   { id: 5, icon: 'ti-building-bank', iconBg: '#EBF1FD', iconColor: 'var(--primary)', title: 'Ofertë e re nga ArlaBank', desc: 'Kredi me interes 3.5% — Shiko tani', time: '6 Qershor' },
 ]
+
+function AiChat() {
+  const [messages, setMessages] = useState([
+    { role: 'assistant', content: 'Përshëndetje! Jam asistenti virtual i ArlaBank. Si mund t\'ju ndihmoj sot?' }
+  ])
+  const [input, setInput] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  const sendMessage = async () => {
+    if (!input.trim()) return
+    const userMsg = { role: 'user', content: input }
+    setMessages(prev => [...prev, userMsg])
+    setInput('')
+    setLoading(true)
+    await new Promise(r => setTimeout(r, 800))
+    const q = input.toLowerCase()
+    let answer = 'Për këtë pyetje ju lutemi kontaktoni bankën në +355 4 123 4567.'
+    if (q.includes('transfert') || q.includes('dërgoj') || q.includes('dergoj')) {
+      answer = 'Për të bërë një transfertë, shkoni te butoni "Dërgo" në faqen kryesore. Transfertat brenda ArlaBank janë të menjëhershme dhe falas. Transfertat jashtë bankës kushtojnë 150 ALL dhe zgjasin 1-2 ditë pune.'
+    } else if (q.includes('bllok') || q.includes('kartë') || q.includes('karte')) {
+      answer = 'Për të bllokuar kartën tuaj, shkoni te faqja "Karta" → butoni "Blloko". Karta bllokohet menjëherë. Mund ta zhbllokoni në çdo moment nga e njëjta faqe.'
+    } else if (q.includes('pin')) {
+      answer = 'PIN-in tuaj mund ta shikoni te faqja "Karta" → butoni "PIN-i". Për siguri, PIN-i shfaqet vetëm pas konfirmimit. Nëse dëshironi të ndryshoni PIN-in, vizitoni degën më të afërt.'
+    } else if (q.includes('orar') || q.includes('deg')) {
+      answer = 'Degët e ArlaBank janë të hapura nga e hëna deri në të premten, nga ora 08:00 deri 16:00. ATM-të janë të disponueshme 24 orë.'
+    } else if (q.includes('kurs') || q.includes('valut') || q.includes('euro') || q.includes('dollar')) {
+      answer = 'Kurset aktuale: EUR/ALL = 108.40, USD/ALL = 99.10, GBP/ALL = 125.80. Mund t\'i gjeni gjithmonë në faqen kryesore.'
+    } else if (q.includes('llogari') || q.includes('hap')) {
+      answer = 'Për të hapur llogari të re, vizitoni degën më të afërt me kartën tuaj të identitetit. Na kontaktoni në +355 4 123 4567.'
+    } else if (q.includes('tarif') || q.includes('komision')) {
+      answer = 'Tarifat: Transferta brenda ArlaBank — falas. Jashtë bankës — 150 ALL. ATM ArlaBank — falas. ATM tjetër — 200 ALL.'
+    } else if (q.includes('fjalëkalim') || q.includes('fjalekalim') || q.includes('password')) {
+      answer = 'Nëse keni harruar fjalëkalimin, klikoni "Keni harruar fjalëkalimin?" në faqen e Login-it dhe do t'ju dërgohet kod verifikimi.'
+    } else if (q.includes('fatur')) {
+      answer = 'Pagesat e faturave (OSHEE, UKT, Vodafone) mund t'i bëni nga faqja "Dërgo". Faturat e regjistruara paguhen automatikisht çdo muaj.'
+    } else if (q.includes('ndihm') || q.includes('problem')) {
+      answer = 'Për ndihmë kontaktoni: +355 4 123 4567 (E Hënë–E Premte 08:00–20:00) ose info@arlabank.al.'
+    }
+    setMessages(prev => [...prev, { role: 'assistant', content: answer }])
+    setLoading(false)
+  }
+
+  return (
+    <div style={{ background: 'var(--surface)', borderRadius: 'var(--radius)', border: '0.5px solid var(--border)', overflow: 'hidden' }}>
+      <div style={{ padding: '12px 14px', borderBottom: '0.5px solid var(--border)', display: 'flex', alignItems: 'center', gap: 8, background: 'var(--primary)' }}>
+        <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <i className="ti ti-building-bank" style={{ fontSize: 13, color: '#fff' }} aria-hidden="true" />
+        </div>
+        <p style={{ fontSize: 13, fontWeight: 600, color: '#fff' }}>Asistenti virtual ArlaBank</p>
+        <div style={{ marginLeft: 'auto', width: 8, height: 8, borderRadius: '50%', background: '#4ADE80' }} />
+      </div>
+
+      <div style={{ height: 220, overflowY: 'auto', padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+        {messages.map((m, i) => (
+          <div key={i} style={{ display: 'flex', justifyContent: m.role === 'user' ? 'flex-end' : 'flex-start', gap: 8 }}>
+            {m.role === 'assistant' && (
+              <div style={{ width: 26, height: 26, borderRadius: '50%', background: 'var(--primary-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 2 }}>
+                <i className="ti ti-building-bank" style={{ fontSize: 12, color: 'var(--primary)' }} aria-hidden="true" />
+              </div>
+            )}
+            <div style={{
+              maxWidth: '78%',
+              padding: '8px 12px',
+              borderRadius: m.role === 'user' ? '14px 14px 4px 14px' : '14px 14px 14px 4px',
+              background: m.role === 'user' ? 'var(--primary)' : 'var(--app-bg)',
+              color: m.role === 'user' ? '#fff' : 'var(--text1)',
+              fontSize: 13,
+              lineHeight: 1.5,
+            }}>
+              {m.content}
+            </div>
+          </div>
+        ))}
+        {loading && (
+          <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+            <div style={{ width: 26, height: 26, borderRadius: '50%', background: 'var(--primary-light)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <i className="ti ti-building-bank" style={{ fontSize: 12, color: 'var(--primary)' }} aria-hidden="true" />
+            </div>
+            <div style={{ background: 'var(--app-bg)', borderRadius: '14px 14px 14px 4px', padding: '8px 12px', fontSize: 13, color: 'var(--text3)' }}>
+              Duke shkruar...
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div style={{ display: 'flex', gap: 8, padding: '10px 12px', borderTop: '0.5px solid var(--border)' }}>
+        <input
+          type="text"
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          onKeyDown={e => e.key === 'Enter' && sendMessage()}
+          placeholder="Shkruaj një pyetje..."
+          style={{ flex: 1, height: 38, borderRadius: 10, border: '1px solid var(--border)', background: 'var(--app-bg)', padding: '0 12px', fontSize: 13, fontFamily: 'var(--font)', color: 'var(--text1)', outline: 'none' }}
+        />
+        <div onClick={sendMessage} style={{ width: 38, height: 38, borderRadius: 10, background: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flexShrink: 0 }}>
+          <i className="ti ti-send" style={{ fontSize: 16, color: '#fff' }} aria-hidden="true" />
+        </div>
+      </div>
+    </div>
+  )
+}
 
 export default function Dashboard() {
   const navigate = useNavigate()
@@ -94,8 +195,6 @@ export default function Dashboard() {
               <i className="ti ti-x" style={{ fontSize: 20, color: 'var(--text2)', cursor: 'pointer' }} onClick={() => setShowSettings(false)} aria-hidden="true" />
             </div>
             <div style={{ flex: 1, overflowY: 'auto' }}>
-
-              {/* Profile */}
               <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '16px 18px', borderBottom: '0.5px solid var(--border)' }}>
                 <div style={{ width: 52, height: 52, borderRadius: '50%', background: 'var(--primary-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, fontWeight: 600, color: 'var(--primary)' }}>AM</div>
                 <div>
@@ -104,7 +203,6 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              {/* Dark mode toggle */}
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 18px', borderBottom: '0.5px solid var(--border)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                   <i className={`ti ${darkMode ? 'ti-moon' : 'ti-sun'}`} style={{ fontSize: 20, color: 'var(--text2)' }} aria-hidden="true" />
@@ -116,7 +214,6 @@ export default function Dashboard() {
                 <div className={`toggle-pill ${darkMode ? 'on' : 'off'}`} onClick={() => setDarkMode(!darkMode)} />
               </div>
 
-              {/* Settings items */}
               {settingsItems.map(item => (
                 <div key={item.label} onClick={() => setActiveSettingsItem(activeSettingsItem === item.label ? null : item.label)} style={{ borderBottom: '0.5px solid var(--border)', cursor: 'pointer' }}>
                   <div style={{ display: 'flex', alignItems: 'center', padding: '14px 18px', gap: 12 }}>
@@ -169,7 +266,6 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Balance Card */}
         <div style={{ background: 'var(--primary)', borderRadius: 'var(--radius)', padding: 18, color: '#fff', position: 'relative', overflow: 'hidden' }}>
           <div style={{ position: 'absolute', right: -20, top: -30, width: 130, height: 130, borderRadius: '50%', background: 'rgba(255,255,255,0.07)' }} />
           <p style={{ fontSize: 12, opacity: 0.75, marginBottom: 10 }}>AL47 2121 1009 0000 0002 3569 8741</p>
@@ -199,7 +295,7 @@ export default function Dashboard() {
         </p>
 
         <p className="section-title">Kursi i këmbimit</p>
-        <div style={{ display: 'flex', gap: 8, padding: '0 18px', marginBottom: 16 }}>
+        <div style={{ display: 'flex', gap: 8, padding: '0 18px', marginBottom: 4 }}>
           {[
             { pair: 'EUR / ALL', rate: '108.40', change: '+0.2%' },
             { pair: 'USD / ALL', rate: '99.10', change: '+0.1%' },
@@ -211,6 +307,11 @@ export default function Dashboard() {
               <p className="fx-change">{fx.change} sot</p>
             </div>
           ))}
+        </div>
+
+        <p className="section-title">Asistenti virtual</p>
+        <div style={{ margin: '0 18px 16px' }}>
+          <AiChat />
         </div>
       </div>
 
