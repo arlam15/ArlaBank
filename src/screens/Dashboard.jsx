@@ -310,7 +310,7 @@ export default function Dashboard() {
         </div>
 
         <p className="section-title">Asistenti virtual</p>
-        <div style={{ margin: '0 18px 16px', maxWidth: 340 }}>
+        <div style={{ margin: '0 10px 16px'}}>
           <AiChat />
         </div>
       </div>
