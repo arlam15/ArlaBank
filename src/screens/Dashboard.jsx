@@ -37,13 +37,13 @@ function AiChat() {
     const q = input.toLowerCase()
     let answer = 'Për këtë pyetje ju lutemi kontaktoni bankën në +355 4 123 4567.'
     if (q.includes('transfert') || q.includes('dërgoj') || q.includes('dergoj')) {
-      answer = 'Për të bërë një transfertë, shkoni te butoni "Dërgo" në faqen kryesore. Transfertat brenda ArlaBank janë të menjëhershme dhe falas. Transfertat jashtë bankës kushtojnë 150 ALL dhe zgjasin 1-2 ditë pune.'
+      answer = 'Për të bërë një transfertë, shkoni te butoni "Dërgo" në faqen kryesore. Transfertat brenda ArlaBank janë të menjëhershme dhe falas. Transfertat jashtë bankës kostojnë 150 ALL dhe zgjasin 1-2 ditë pune.'
     } else if (q.includes('bllok') || q.includes('kartë') || q.includes('karte')) {
       answer = 'Për të bllokuar kartën tuaj, shkoni te faqja "Karta" → butoni "Blloko". Karta bllokohet menjëherë. Mund ta zhbllokoni në çdo moment nga e njëjta faqe.'
     } else if (q.includes('pin')) {
       answer = 'PIN-in tuaj mund ta shikoni te faqja "Karta" → butoni "PIN-i". Për siguri, PIN-i shfaqet vetëm pas konfirmimit. Nëse dëshironi të ndryshoni PIN-in, vizitoni degën më të afërt.'
     } else if (q.includes('orar') || q.includes('deg')) {
-      answer = 'Degët e ArlaBank janë të hapura nga e hëna deri në të premten, nga ora 08:00 deri 16:00. ATM-të janë të disponueshme 24 orë.'
+      answer = 'Degët e ArlaBank janë të hapura E Hënë deri E Premte, nga ora 08:00 deri 16:00. ATM-të janë të disponueshme 24 orë.'
     } else if (q.includes('kurs') || q.includes('valut') || q.includes('euro') || q.includes('dollar')) {
       answer = 'Kurset aktuale: EUR/ALL = 108.40, USD/ALL = 99.10, GBP/ALL = 125.80. Mund t\'i gjeni gjithmonë në faqen kryesore.'
     } else if (q.includes('llogari') || q.includes('hap')) {
@@ -51,9 +51,9 @@ function AiChat() {
     } else if (q.includes('tarif') || q.includes('komision')) {
       answer = 'Tarifat: Transferta brenda ArlaBank — falas. Jashtë bankës — 150 ALL. ATM ArlaBank — falas. ATM tjetër — 200 ALL.'
     } else if (q.includes('fjalëkalim') || q.includes('fjalekalim') || q.includes('password')) {
-      answer = 'Nëse keni harruar fjalëkalimin, klikoni "Keni harruar fjalëkalimin?" në faqen e Login-it dhe do t'ju dërgohet kod verifikimi.'
+      answer = 'Nëse keni harruar fjalëkalimin, klikoni "Keni harruar fjalëkalimin?" në faqen e Login-it dhe do t\'ju dërgohet kod verifikimi.'
     } else if (q.includes('fatur')) {
-      answer = 'Pagesat e faturave (OSHEE, UKT, Vodafone) mund t'i bëni nga faqja "Dërgo". Faturat e regjistruara paguhen automatikisht çdo muaj.'
+      answer = 'Pagesat e faturave (OSHEE, UKT, Vodafone) mund t\'i bëni nga faqja "Dërgo". Faturat e regjistruara paguhen automatikisht çdo muaj.'
     } else if (q.includes('ndihm') || q.includes('problem')) {
       answer = 'Për ndihmë kontaktoni: +355 4 123 4567 (E Hënë–E Premte 08:00–20:00) ose info@arlabank.al.'
     }
